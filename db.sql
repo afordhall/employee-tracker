@@ -21,15 +21,22 @@ CREATE TABLE employee (
 	); 
     
 SELECT * FROM department;
-SELECT * FROM role;
+SELECT * FROM roles;
 SELECT * FROM employee; 
 
-INSERT INTO department (department_name)
+INSERT INTO roles (title, salery, department)
 VALUES  ("Electrictrician" ,80000, 1),
 ("Finanical Adviser", 90000, 2),
 ("Loan Officer", 120000, 3),
 ("Software Engineer", 100000, 4),
 ("Sales Rep", 50000, 5); 
+
+INSERT INTO department (departement_name) 
+values ("Energy"),
+("Sales"),
+("IT"), 
+("Finance"),
+("Customer Service");
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
