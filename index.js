@@ -13,6 +13,9 @@ const connection = mysql.createConnection({
     database: "employee_db" 
 });
 
+
+// ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'yourRootPassword
+
 connection.connect((err) =>{
     if (err) {
         throw err
@@ -69,3 +72,33 @@ function  askQuestion () {
 
 };
 
+
+function AddEmployee() {
+    connection.query("SELECT * FROM role", function(err, result){
+        if (err) throw err;
+
+        inquirer
+            .prompt([
+                {
+                    name: "firstName",
+                    type: "input",
+                    message: "Enter employee's first name"
+                },
+                {
+                    name: "lastName",
+                    type: "input",
+                    message: "Enter employee's last name"
+                },
+                {
+                    name: "employeeRole",
+                    tyoe: "list", 
+                    message: "Enter role", 
+                }
+            ])
+    })
+}
+
+
+app.listen(PORT, () => {
+    console.log(`Server is listening on: http://localhost${PORT}`);
+})
