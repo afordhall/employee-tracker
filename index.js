@@ -1,9 +1,9 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const express = require ("express");
+// const express = require ("express");
 
 const PORT = process.env.PORT || 3000;
-const app = expres();
+// const app = express();
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -21,7 +21,7 @@ connection.connect((err) =>{
         throw err
     } 
 
-    askQuestion();
+    askQuestion()
 
 });
 
@@ -32,58 +32,67 @@ function  askQuestion () {
             type: "list", 
             message: "Choose from the following", 
             options: [
-                "add employee", 
-                "add department", 
-                "add role", 
                 "view employees",
                 "view departments",
                 "view roles", 
+                "add employee",
+                "delete employee",                   
             ]
+
         })
         .then((answer) => {
             switch (answer.action) {
-                case "add employee":
-                    AddEmployee();
-                    break;
-
-                case "add departemnt":
-                    AddDepartment();
-                    break;
-
-                case "add role":
-                    AddRole();
-                    break;
-
+               
                 case "view employee":
-                    VeiwEmployee();
+                    viewEmployee();
                     break;
     
                 case "view departemnt":
-                    ViewDepartment();
+                    viewDepartment();
                     break;
     
                 case "view role":
-                    ViewRole();
+                    viewRole();
                     break;
-            
+               
+                case "add employee":
+                    addEmployee();
+                    break;
 
+                case "delete employee":
+                    deleteEmployee();
+                    break;
             }
         })
 
 };
 
 
-function AddEmployee() {
-    connection.query("SELECT * FROM role", function(err, result){
-        if (err) throw err;
+function viewEmployee() {
+    connection.query("select * FROM employee", function(err, res){
+        if (err) throw err
+        console.log(res);
 
+    })
+}
+
+
+function viewDepartment() {
+    connection.query("select * from department", function (err,res){
+        let departmentOptions = res.map(function (department){
+            return {name: department.name, value: department.id}
+        })
         inquirer
             .prompt([
                 {
-                    name: "firstName",
-                    type: "input",
-                    message: "Enter employee's first name"
-                },
+                    type: "list",
+                    name: "departmentOptions",
+                    message: "Choose Department", 
+                    choices: departmentOptions
+                })
+                .then(function(userChoise) {
+
+                })
                 {
                     name: "lastName",
                     type: "input",
@@ -95,10 +104,12 @@ function AddEmployee() {
                     message: "Enter role", 
                 }
             ])
+            // .then((firstNmae, lastName, employeeRole))
     })
 }
 
 
 app.listen(PORT, () => {
     console.log(`Server is listening on: http://localhost${PORT}`);
-})
+});
+
