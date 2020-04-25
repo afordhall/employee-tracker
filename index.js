@@ -103,7 +103,7 @@ function viewDepartment() {
 
 function addEmployee() {
     inquirer
-        .prompt ([
+        .prompt([
             {
                 type: "input",
                 name: "addEmployee",
@@ -128,16 +128,35 @@ function addEmployee() {
                     "Sales Rep"
                 ]
             },
-            
+
+
+        ])
+};
+
+//delete an employee 
+
+function deleteEmployee() {
+    inquirer
+        .prompt([
+            {
+                type: "list",
+                name: "deleteEmployee",
+                message: "Which employee are we deleting?",
+                choices: ["A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",]
             }
         ])
-} 
+}
 
 
 
 
 
-    app.listen(PORT, () => {
-        console.log(`Server is listening on: http://localhost${PORT}`);
-    });
+app.listen(PORT, () => {
+    console.log(`Server is listening on: http://localhost${PORT}`);
+});
 
