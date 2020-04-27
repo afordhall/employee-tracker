@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: 'root',
-    password: "",
+    password: "password",
     database: "employee_db"
 });
 
@@ -31,19 +31,19 @@ function askQuestion() {
             name: "action",
             type: "list",
             message: "Choose from the following",
-            options: [
+            choices: [
                 "view employees",
                 "view departments",
                 "view roles",
-                "add employee",
-                "delete employee",
+                "add employees",
+                "delete employees",
             ]
 
         })
         .then((answer) => {
             switch (answer.action) {
 
-                case "view employee":
+                case "view employees":
                     viewEmployee();
                     break;
 
@@ -55,11 +55,11 @@ function askQuestion() {
                     viewRole();
                     break;
 
-                case "add employee":
+                case "add employees":
                     addEmployee();
                     break;
 
-                case "delete employee":
+                case "delete employees":
                     deleteEmployee();
                     break;
             }
@@ -71,7 +71,7 @@ function askQuestion() {
 function viewEmployee() {
     connection.query("SELECT * FROM employee", function (err, res) {
         if (err) throw err
-        console.log(res);
+        console.table(res);
 
     })
 }
@@ -93,7 +93,7 @@ function viewDepartment() {
             .then(function (userChoise) {
                 connection.query(`select first_name, last_name from employee where role_id=${userChoise.departmentOptions}`,
                     function (err, res) {
-                        console.log(res);
+                        console.table(res);
                         askQuestion()
                     }
                 )
@@ -150,13 +150,9 @@ function deleteEmployee() {
                     "F",]
             }
         ])
-}
+};
 
 
 
 
-
-app.listen(PORT, () => {
-    console.log(`Server is listening on: http://localhost${PORT}`);
-});
 
